@@ -1,14 +1,20 @@
-import { render } from "@testing-library/react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
 class App extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+
+    this.state = { latitude: 25 };
     window.navigator.geolocation.getCurrentPosition(
-      position => console.log(position),
+      position => {
+        this.setState({ latitude: position.coords.latitude });
+      },
       error => console.log(error)
     );
-    return <div>You are in northern hemisphere</div>;
+  }
+  render() {
+    return <div>{this.state.latitude}</div>;
   }
 }
 
